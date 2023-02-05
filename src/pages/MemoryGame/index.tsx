@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 import { cardType, elementType } from "../../data/types";
 import gameElements from "../../data/gameElements";
@@ -25,32 +25,63 @@ const shuffle = (dimension: number, elements: elementType[]) => {
 	return doubledOptions.sort(() => Math.random() - 0.5);
 };
 
+function timeout(delay: number) {
+	return new Promise((res) => setTimeout(res, delay));
+}
+
 export default function MemoryGame() {
 	const [dimension, setDimension] = useState<number>(modes.easy);
-	const [selectedCard, setSelected] = useState<cardType | null>(null);
+
+	type gameCard = cardType | null;
+	const [first, setFirst] = useState<gameCard>(null);
+	const [second, setSecond] = useState<gameCard>(null);
+	const [active, setActive] = useState<number[]>(Array.from({ length: dimension ** 2 }, (_, i) => i));
 
 	const shuffledCards = useMemo<cardType[]>(() => shuffle(dimension, gameElements), [dimension, gameElements]);
 
 	const handleClick = (card: cardType) => {
-		console.log(card, selectedCard);
+		console.log(active);
+		if (!first) {
+			setFirst(card);
+		} else if (!second) {
+			setSecond(card);
+		}
+	};
 
-		if (!selectedCard) {
-			setSelected(card);
-			return;
-		} else if (card === selectedCard) {
-			console.log("EQUAL");
-		} else if (card.element === selectedCard.element) {
-			console.log("UHUL");
+	useEffect(() => {
+		if (!first) return;
+
+		async function delayedFlip(milliseconds: number) {
+			await timeout(milliseconds);
+			setFirst(null);
+			setSecond(null);
 		}
 
-		setSelected(null);
-	};
+		if (first === second) {
+			console.log("EQUAL");
+			delayedFlip(250);
+			return;
+		} else if (first.element === second?.element) {
+			const newActive = active.filter(
+				(index) => index !== shuffledCards.indexOf(first) && index !== shuffledCards.indexOf(second)
+			);
+			setActive(newActive);
+			delayedFlip(0);
+			return;
+		}
+
+		if (first && second) delayedFlip(1500);
+	}, [first, second]);
 
 	return (
 		<Screen>
 			<CardsContainer dimension={dimension}>
 				{shuffledCards.map((card, index) => (
-					<LanguageCard key={`${card.element}-${card.id}`} onClick={() => handleClick(card)}>
+					<LanguageCard
+						key={`${card.element}-${card.id}`}
+						onClick={() => handleClick(card)}
+						isFlipped={card === first || card === second}
+						isActive={active.includes(index)}>
 						{card.element}
 					</LanguageCard>
 				))}
