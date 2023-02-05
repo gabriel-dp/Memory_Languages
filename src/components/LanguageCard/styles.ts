@@ -47,6 +47,7 @@ export const FrontCard = styled.div`
 	${CardForm}
 	transform: rotateY(180deg);
 	padding: 30%;
+	overflow: hidden;
 
 	background: linear-gradient(135deg, #cccccccc, #ffffffcc);
 	border: 1px solid #ffffffaa;
