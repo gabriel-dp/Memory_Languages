@@ -18,7 +18,7 @@ export default function LanguageCard(props: CardProps) {
 	return (
 		<CardContainer onClick={() => props.onClick()} isFlipped={props.isFlipped} isActive={props.isActive}>
 			<BackCard>
-				<QuestionMark />
+				<QuestionMark fill="#b5bcc7" />
 			</BackCard>
 			<FrontCard>{Icon}</FrontCard>
 		</CardContainer>

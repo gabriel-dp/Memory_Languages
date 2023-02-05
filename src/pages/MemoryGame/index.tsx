@@ -5,11 +5,11 @@ import gameElements from "../../data/gameElements";
 import { modes } from "../../data/gameOptions";
 import LanguageCard from "../../components/LanguageCard";
 
-import { Screen, CardsContainer } from "./styles";
+import { ScreenWrapper, CardsContainer } from "./styles";
 
 const shuffle = (dimension: number, elements: elementType[]) => {
 	const totalCards = dimension ** 2;
-	const selectedOptions = elements.slice(0, totalCards / 2);
+	const selectedOptions = elements.sort(() => Math.random() - 0.5).slice(0, totalCards / 2);
 	const ObjectCards: cardType[] = selectedOptions.map((elem) => {
 		const object: cardType = {
 			element: elem,
@@ -30,7 +30,7 @@ function timeout(delay: number) {
 }
 
 export default function MemoryGame() {
-	const [dimension, setDimension] = useState<number>(modes.hard);
+	const [dimension, setDimension] = useState<number>(modes.easy);
 
 	type gameCard = cardType | null;
 	const [first, setFirst] = useState<gameCard>(null);
@@ -65,7 +65,7 @@ export default function MemoryGame() {
 				(index) => index !== shuffledCards.indexOf(first) && index !== shuffledCards.indexOf(second)
 			);
 			setActive(newActive);
-			delayedFlip(0);
+			delayedFlip(100);
 			return;
 		}
 
@@ -73,7 +73,7 @@ export default function MemoryGame() {
 	}, [first, second]);
 
 	return (
-		<Screen>
+		<ScreenWrapper>
 			<CardsContainer dimension={dimension}>
 				{shuffledCards.map((card, index) => (
 					<LanguageCard
@@ -85,6 +85,6 @@ export default function MemoryGame() {
 					/>
 				))}
 			</CardsContainer>
-		</Screen>
+		</ScreenWrapper>
 	);
 }

@@ -8,8 +8,7 @@ interface ContainerProps {
 const CardForm = css`
 	width: 100%;
 	height: 100%;
-	border-radius: 1rem;
-	padding: 35%;
+	border-radius: 0.5rem;
 
 	display: flex;
 	align-items: center;
@@ -37,13 +36,18 @@ export const CardContainer = styled.div<ContainerProps>`
 export const BackCard = styled.div`
 	${CardForm}
 	transform: rotateY(0deg);
+	z-index: 2;
+	padding: 35%;
 
-	background-color: #888;
+	background: linear-gradient(135deg, #878f9c, #878f9c);
+	border: 1px solid #ffffff55;
 `;
 
 export const FrontCard = styled.div`
 	${CardForm}
 	transform: rotateY(180deg);
+	padding: 30%;
 
-	background-color: #aaa;
+	background: linear-gradient(135deg, #cccccccc, #ffffffcc);
+	border: 1px solid #ffffffaa;
 `;
