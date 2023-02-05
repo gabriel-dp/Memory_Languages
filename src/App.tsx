@@ -1,6 +1,6 @@
-import GlobalStyle from "./styles/globalStyle";
+import GlobalStyle from "styles/globalStyle";
 
-import MemoryGame from "./pages/MemoryGame";
+import MemoryGame from "pages/MemoryGame";
 
 export default function App() {
 	return (

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import SvgIcon from "../SvgIcon";
-import { ReactComponent as QuestionMark } from "../../assets/question-mark.svg";
+import SvgIcon from "components/SvgIcon";
+import { ReactComponent as QuestionMark } from "assets/question-mark.svg";
 
 import { BackCard, CardContainer, FrontCard } from "./styles";
 
