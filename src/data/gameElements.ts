@@ -1,5 +1,24 @@
-type elementType = number | string;
+type elementType = string;
 
-const OPTIONS: elementType[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const OPTIONS: elementType[] = [
+	"c",
+	"cpp",
+	"csharp",
+	"dart",
+	"go",
+	"haskell",
+	"java",
+	"javascript",
+	"julia",
+	"kotlin",
+	"lua",
+	"php",
+	"python",
+	"ruby",
+	"rust",
+	"scala",
+	"swift",
+	"typescript",
+];
 
 export default OPTIONS;

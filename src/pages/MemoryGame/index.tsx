@@ -30,7 +30,7 @@ function timeout(delay: number) {
 }
 
 export default function MemoryGame() {
-	const [dimension, setDimension] = useState<number>(modes.easy);
+	const [dimension, setDimension] = useState<number>(modes.hard);
 
 	type gameCard = cardType | null;
 	const [first, setFirst] = useState<gameCard>(null);
@@ -40,7 +40,6 @@ export default function MemoryGame() {
 	const shuffledCards = useMemo<cardType[]>(() => shuffle(dimension, gameElements), [dimension, gameElements]);
 
 	const handleClick = (card: cardType) => {
-		console.log(active);
 		if (!first) {
 			setFirst(card);
 		} else if (!second) {
@@ -81,9 +80,9 @@ export default function MemoryGame() {
 						key={`${card.element}-${card.id}`}
 						onClick={() => handleClick(card)}
 						isFlipped={card === first || card === second}
-						isActive={active.includes(index)}>
-						{card.element}
-					</LanguageCard>
+						isActive={active.includes(index)}
+						name={card.element.toString()}
+					/>
 				))}
 			</CardsContainer>
 		</Screen>
