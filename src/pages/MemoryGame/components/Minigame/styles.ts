@@ -5,9 +5,8 @@ interface ContainerProps {
 }
 
 export const CardsContainer = styled.div<ContainerProps>`
-	width: max(min(100vh, 100%), 25rem);
+	width: 100%;
 	aspect-ratio: 1;
-	padding: 2rem;
 
 	display: grid;
 	grid-template-columns: ${(props) => `repeat(${props.dimension}, 1fr)`};

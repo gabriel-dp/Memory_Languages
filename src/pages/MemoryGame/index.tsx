@@ -1,13 +1,25 @@
+import { useState } from "react";
+
 import Minigame from "./components/Minigame";
-import { modes } from "data/gameOptions";
+import GameMenu from "./components/GameMenu";
+import { difficulties } from "data/gameOptions";
 import gameElements from "data/gameElements";
 
-import { ScreenWrapper } from "./styles";
+import { ScreenWrapper, GameContainer } from "./styles";
 
 export default function MemoryGame() {
+	const [dimension, setDimension] = useState(difficulties.hard);
+
+	const changeDimension = (newDimension: number) => {
+		setDimension(newDimension);
+	};
+
 	return (
 		<ScreenWrapper>
-			<Minigame dimension={modes.easy} gameElements={gameElements} />
+			<GameContainer>
+				<GameMenu dimension={dimension} changeDimension={changeDimension}></GameMenu>
+				<Minigame dimension={dimension} gameElements={gameElements} />
+			</GameContainer>
 		</ScreenWrapper>
 	);
 }
