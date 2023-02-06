@@ -10,7 +10,7 @@ import { CardsContainer } from "./styles";
 interface MinigameProps {
 	dimension: number;
 	gameElements: elementType[];
-	isPlaying: (state: boolean) => void;
+	isPlaying: (state: boolean, reset?: boolean) => void;
 }
 
 export default function Minigame(props: MinigameProps) {
@@ -22,7 +22,7 @@ export default function Minigame(props: MinigameProps) {
 
 	// Resets all states when game is reloaded
 	useEffect(() => {
-		props.isPlaying(false);
+		props.isPlaying(false, true);
 		started.current = false;
 
 		setFirst(null);

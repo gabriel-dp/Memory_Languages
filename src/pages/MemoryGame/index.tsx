@@ -14,8 +14,8 @@ export default function MemoryGame() {
 	const [time, setTime] = useState(0);
 	const [playing, setPlaying] = useState(false);
 
-	const isPlaying = (state: boolean) => {
-		if (state) setTime(0);
+	const isPlaying = (state: boolean, reset?: boolean) => {
+		if (state || reset) setTime(0);
 		setPlaying(state);
 	};
 
