@@ -8,11 +8,9 @@ import gameElements from "data/gameElements";
 import { ScreenWrapper, GameContainer } from "./styles";
 
 export default function MemoryGame() {
-	const [dimension, setDimension] = useState(difficulties.hard);
+	const [dimension, setDimension] = useState(difficulties.easy);
 
-	const changeDimension = (newDimension: number) => {
-		setDimension(newDimension);
-	};
+	const changeDimension = (newDimension: number) => setDimension(newDimension);
 
 	return (
 		<ScreenWrapper>

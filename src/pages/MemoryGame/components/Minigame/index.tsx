@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 
 import LanguageCard from "components/LanguageCard";
 import { cardType, elementType } from "data/types";
@@ -15,12 +15,12 @@ interface MinigameProps {
 export default function Minigame(props: MinigameProps) {
 	const [first, setFirst] = useState<cardType | null>(null);
 	const [second, setSecond] = useState<cardType | null>(null);
-	const [active, setActive] = useState<number[]>(Array.from({ length: props.dimension ** 2 }, (_, i) => i));
+	const [solved, setSolved] = useState<number[]>([]);
 
-	const shuffledCards = useMemo<cardType[]>(
-		() => shuffle(props.dimension, props.gameElements),
-		[props.dimension, props.gameElements]
-	);
+	const shuffledCards = useMemo<cardType[]>(() => {
+		setSolved([]);
+		return shuffle(props.dimension, props.gameElements);
+	}, [props.dimension, props.gameElements]);
 
 	const handleClick = (card: cardType) => {
 		if (!first) {
@@ -41,28 +41,26 @@ export default function Minigame(props: MinigameProps) {
 
 		if (first === second) {
 			console.log("EQUAL");
-			delayedFlip(100);
+			delayedFlip(50);
 			return;
 		} else if (first.element === second?.element) {
-			const newActive = active.filter(
-				(index) => index !== shuffledCards.indexOf(first) && index !== shuffledCards.indexOf(second)
-			);
-			setActive(newActive);
-			delayedFlip(100);
+			const recentSolved = [shuffledCards.indexOf(first), shuffledCards.indexOf(second)];
+			setSolved(solved.concat(recentSolved));
+			delayedFlip(50);
 			return;
 		}
 
-		if (first && second) delayedFlip(1500);
+		if (first && second) delayedFlip(1100);
 	}, [first, second]);
 
 	return (
 		<CardsContainer dimension={props.dimension}>
 			{shuffledCards.map((card, index) => (
 				<LanguageCard
-					key={`${card.element}-${card.id}`}
+					key={`${card.element}-${index}`}
 					onClick={() => handleClick(card)}
 					isFlipped={card === first || card === second}
-					isActive={active.includes(index)}
+					isActive={!solved.includes(index)}
 					name={card.element.toString()}
 				/>
 			))}
