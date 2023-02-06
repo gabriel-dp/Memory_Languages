@@ -10,19 +10,34 @@ import { CardsContainer } from "./styles";
 interface MinigameProps {
 	dimension: number;
 	gameElements: elementType[];
+	isPlaying: (state: boolean) => void;
 }
 
 export default function Minigame(props: MinigameProps) {
+	const started = useRef(false);
 	const [first, setFirst] = useState<cardType | null>(null);
 	const [second, setSecond] = useState<cardType | null>(null);
 	const [solved, setSolved] = useState<number[]>([]);
 
-	const shuffledCards = useMemo<cardType[]>(() => {
+	useEffect(() => {
+		props.isPlaying(false);
+		started.current = false;
+
+		setFirst(null);
+		setSecond(null);
 		setSolved([]);
+	}, [props.dimension]);
+
+	const shuffledCards = useMemo<cardType[]>(() => {
 		return shuffle(props.dimension, props.gameElements);
 	}, [props.dimension, props.gameElements]);
 
 	const handleClick = (card: cardType) => {
+		if (!started.current) {
+			props.isPlaying(true);
+			started.current = true;
+		}
+
 		if (!first) {
 			setFirst(card);
 		} else if (!second) {
@@ -52,6 +67,13 @@ export default function Minigame(props: MinigameProps) {
 
 		if (first && second) delayedFlip(1100);
 	}, [first, second]);
+
+	useEffect(() => {
+		if (solved.length === props.dimension ** 2) {
+			props.isPlaying(false);
+			started.current = false;
+		}
+	}, [solved]);
 
 	return (
 		<CardsContainer dimension={props.dimension}>

@@ -1,10 +1,12 @@
 import { difficulties } from "data/gameOptions";
+import Timer from "components/Timer";
 
 import { Difficulties, OptionsContainer } from "./styles";
 
 interface MenuProps {
 	dimension: number;
 	changeDimension: (newDimension: number) => void;
+	time: number;
 }
 
 export default function GameMenu(props: MenuProps) {
@@ -27,6 +29,7 @@ export default function GameMenu(props: MenuProps) {
 					</div>
 				))}
 			</Difficulties>
+			<Timer time={props.time} />
 		</OptionsContainer>
 	);
 }
