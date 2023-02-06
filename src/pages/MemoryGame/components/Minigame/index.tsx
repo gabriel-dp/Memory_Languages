@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import LanguageCard from "components/LanguageCard";
 import { cardType, elementType } from "data/types";
@@ -18,6 +18,7 @@ export default function Minigame(props: MinigameProps) {
 	const [first, setFirst] = useState<cardType | null>(null);
 	const [second, setSecond] = useState<cardType | null>(null);
 	const [solved, setSolved] = useState<number[]>([]);
+	const [shuffledCards, setShuffledCards] = useState<cardType[]>([]);
 
 	useEffect(() => {
 		props.isPlaying(false);
@@ -26,10 +27,7 @@ export default function Minigame(props: MinigameProps) {
 		setFirst(null);
 		setSecond(null);
 		setSolved([]);
-	}, [props.dimension]);
-
-	const shuffledCards = useMemo<cardType[]>(() => {
-		return shuffle(props.dimension, props.gameElements);
+		setShuffledCards(shuffle(props.dimension, props.gameElements));
 	}, [props.dimension, props.gameElements]);
 
 	const handleClick = (card: cardType) => {
