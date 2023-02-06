@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import LanguageCard from "components/LanguageCard";
 import { cardType, elementType } from "data/types";
@@ -20,6 +20,7 @@ export default function Minigame(props: MinigameProps) {
 	const [solved, setSolved] = useState<number[]>([]);
 	const [shuffledCards, setShuffledCards] = useState<cardType[]>([]);
 
+	// Resets all states when game is reloaded
 	useEffect(() => {
 		props.isPlaying(false);
 		started.current = false;
@@ -31,11 +32,13 @@ export default function Minigame(props: MinigameProps) {
 	}, [props.dimension, props.gameElements]);
 
 	const handleClick = (card: cardType) => {
+		// Timer starts when user clicks in a card
 		if (!started.current) {
 			props.isPlaying(true);
 			started.current = true;
 		}
 
+		// Enable click in only two cards by play, avoiding many flipped cards
 		if (!first) {
 			setFirst(card);
 		} else if (!second) {
@@ -43,33 +46,37 @@ export default function Minigame(props: MinigameProps) {
 		}
 	};
 
+	// Checks the card combination results
 	useEffect(() => {
-		if (!first) return;
+		if (!first || !second) return;
 
-		async function delayedFlip(milliseconds: number) {
+		// Unflips both cards after a delay
+		async function delayedUnflip(milliseconds: number) {
 			await timeout(milliseconds);
 			setFirst(null);
 			setSecond(null);
 		}
 
-		if (first === second) {
-			console.log("EQUAL");
-			delayedFlip(50);
-			return;
-		} else if (first.element === second?.element) {
-			const recentSolved = [shuffledCards.indexOf(first), shuffledCards.indexOf(second)];
-			setSolved(solved.concat(recentSolved));
-			delayedFlip(50);
+		// User clicked in the same card twice or found the matching cards
+		if (first.element === second.element) {
+			if (first.id !== second.id) {
+				// Found the matching cards
+				const recentSolved = [shuffledCards.indexOf(first), shuffledCards.indexOf(second)];
+				setSolved(solved.concat(recentSolved));
+			}
+			// Small delay to unflip the cards before new selection
+			delayedUnflip(50);
 			return;
 		}
 
-		if (first && second) delayedFlip(1100);
+		// Delay in wrong combination must be higher
+		if (first && second) delayedUnflip(1100);
 	}, [first, second]);
 
+	// Controls the end of the game
 	useEffect(() => {
 		if (solved.length === props.dimension ** 2) {
 			props.isPlaying(false);
-			started.current = false;
 		}
 	}, [solved]);
 

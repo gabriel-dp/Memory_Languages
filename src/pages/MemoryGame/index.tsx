@@ -13,11 +13,13 @@ export default function MemoryGame() {
 
 	const [time, setTime] = useState(0);
 	const [playing, setPlaying] = useState(false);
+
 	const isPlaying = (state: boolean) => {
 		if (state) setTime(0);
 		setPlaying(state);
 	};
 
+	// Controls game time, counting the seconds
 	useEffect(() => {
 		let interval: ReturnType<typeof setInterval>;
 		if (playing) {
