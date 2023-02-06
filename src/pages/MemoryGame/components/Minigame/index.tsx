@@ -81,11 +81,14 @@ export default function Minigame(props: MinigameProps) {
 		}
 	}, [solved]);
 
+	// Each game has a random Id to avoid matching cards between games
+	const randomGameId = useRef(Math.random());
+
 	return (
 		<CardsContainer dimension={props.dimension}>
 			{shuffledCards.map((card, index) => (
 				<LanguageCard
-					key={`${card.element}-${index}-${props.dimension}`}
+					key={`${card.element}-${index}-${randomGameId}`}
 					onClick={() => handleClick(card)}
 					isFlipped={card === first || card === second}
 					isActive={!solved.includes(index)}

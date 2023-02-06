@@ -7,6 +7,7 @@ interface ContainerProps {
 export const CardsContainer = styled.div<ContainerProps>`
 	width: 100%;
 	aspect-ratio: 1;
+	overflow: hidden;
 
 	display: grid;
 	grid-template-columns: ${(props) => `repeat(${props.dimension}, 1fr)`};
