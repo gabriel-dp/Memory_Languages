@@ -57,7 +57,7 @@ export default function Minigame(props: MinigameProps) {
 		<CardsContainer dimension={props.dimension}>
 			{shuffledCards.map((card, index) => (
 				<LanguageCard
-					key={`${card.element}-${index}`}
+					key={`${card.element}-${index}-${props.dimension}`}
 					onClick={() => handleClick(card)}
 					isFlipped={card === first || card === second}
 					isActive={!solved.includes(index)}
