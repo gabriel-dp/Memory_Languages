@@ -23,6 +23,7 @@ export default function GameMenu(props: MenuProps) {
 					<div key={difficulty}>
 						<input
 							type="radio"
+							id={difficulty}
 							name="difficulty"
 							checked={props.dimension === difficulties[difficulty]}
 							value={difficulties[difficulty]}
