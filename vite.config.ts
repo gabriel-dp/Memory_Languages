@@ -6,5 +6,6 @@ import svgr from "vite-plugin-svgr";
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [react(), tsconfigPaths(), svgr()],
+	base: "/Memory_Languages/",
 });
 
