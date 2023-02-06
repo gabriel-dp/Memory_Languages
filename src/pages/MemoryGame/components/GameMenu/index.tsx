@@ -1,12 +1,13 @@
 import { difficulties } from "data/gameOptions";
 import Timer from "components/Timer";
 
-import { Difficulties, OptionsContainer } from "./styles";
+import { Difficulties, MenuButton, OptionsContainer } from "./styles";
 
 interface MenuProps {
 	dimension: number;
 	changeDimension: (newDimension: number) => void;
 	time: number;
+	resetGame: () => void;
 }
 
 export default function GameMenu(props: MenuProps) {
@@ -16,6 +17,7 @@ export default function GameMenu(props: MenuProps) {
 
 	return (
 		<OptionsContainer>
+			<MenuButton onClick={() => props.resetGame()}>Reset</MenuButton>
 			<Difficulties>
 				{Object.keys(difficulties).map((difficulty) => (
 					<div key={difficulty}>

@@ -26,3 +26,17 @@ export const Difficulties = styled.div`
 		gap: 0.5rem;
 	}
 `;
+
+export const MenuButton = styled.button`
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+
+	font-size: 1rem;
+	color: #fff;
+	padding: 0.25rem 0;
+
+	:hover {
+		text-decoration: underline;
+	}
+`;

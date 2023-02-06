@@ -11,6 +11,7 @@ interface MinigameProps {
 	dimension: number;
 	gameElements: elementType[];
 	isPlaying: (state: boolean, reset?: boolean) => void;
+	reset: {};
 }
 
 export default function Minigame(props: MinigameProps) {
@@ -29,7 +30,7 @@ export default function Minigame(props: MinigameProps) {
 		setSecond(null);
 		setSolved([]);
 		setShuffledCards(shuffle(props.dimension, props.gameElements));
-	}, [props.dimension, props.gameElements]);
+	}, [props.dimension, props.gameElements, props.reset]);
 
 	const handleClick = (card: cardType) => {
 		// Timer starts when user clicks in a card

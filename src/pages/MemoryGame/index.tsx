@@ -30,11 +30,15 @@ export default function MemoryGame() {
 		return () => clearInterval(interval);
 	}, [playing]);
 
+	// Reset function is made of a empty object that is reloaded and forces <Minigame /> to rerender
+	const [reset, setState] = useState({});
+	const resetGame = () => setState({ ...reset });
+
 	return (
 		<ScreenWrapper>
 			<GameContainer>
-				<GameMenu dimension={dimension} changeDimension={changeDimension} time={time}></GameMenu>
-				<Minigame dimension={dimension} gameElements={gameElements} isPlaying={isPlaying} />
+				<GameMenu dimension={dimension} changeDimension={changeDimension} time={time} resetGame={resetGame} />
+				<Minigame dimension={dimension} gameElements={gameElements} isPlaying={isPlaying} reset={reset} />
 			</GameContainer>
 		</ScreenWrapper>
 	);
